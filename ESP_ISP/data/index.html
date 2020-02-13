@@ -1,0 +1,171 @@
+<html>
+<body style="text-align: center;" bgcolor="#b3ffb4" onload=getfinf()>
+<title>ESP ISP Programmer!</title>
+
+<script>
+function sendloc(x) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {}
+  };
+
+  xhttp.open("GET", "loc?location=" + x , true);
+  xhttp.send();
+}
+
+function program() {
+	location.replace("/program");
+ 	document.getElementById('wait').style.display = "block";
+}
+
+function read() {
+  var x = document.getElementById("mem").value;
+	location.replace("/read?mem=" + x);
+ 	document.getElementById('wait').style.display = "block";
+}
+
+function verify()
+{
+ document.getElementById('wait').style.display = "block";
+ alert("Getting verification status from server..");
+ var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4) {
+    	if(this.responseText == "v_success")
+      		document.getElementById("v_success").style.display = "block";
+      	else
+      		document.getElementById("v_fail").style.display = "block";
+
+      	document.getElementById('wait').style.display = "none";
+    }
+  };
+  xhttp.open("GET", "v_req", true);
+  xhttp.send();
+}
+
+function getfinf() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4) {
+    	var x = this.responseText;
+      		document.getElementById("file1").innerHTML = x.substr(0, x.indexOf("$"));
+      		x = x.substr(x.indexOf("$") + 1, x.length);
+      		document.getElementById("size1").innerHTML = x.substr(0, x.indexOf("$"));
+      		x = x.substr(x.indexOf("$") + 1, x.length);
+      		document.getElementById("file2").innerHTML = x.substr(0, x.indexOf("$"));
+      		x = x.substr(x.indexOf("$") + 1, x.length);
+      		document.getElementById("size2").innerHTML = x.substr(0, x.indexOf("$"));
+      		x = x.substr(x.indexOf("$") + 1, x.length);
+      		document.getElementById("file3").innerHTML = x.substr(0, x.indexOf("$"));
+      		x = x.substr(x.indexOf("$") + 1, x.length);
+      		document.getElementById("size3").innerHTML = x.substr(0, x.indexOf("$"));
+      		x = x.substr(x.indexOf("$") + 1, x.length);
+      		document.getElementById("file4").innerHTML = x.substr(0, x.indexOf("$"));
+      		x = x.substr(x.indexOf("$") + 1, x.length);
+      		document.getElementById("size4").innerHTML = x.substr(0, x.indexOf("$"));
+      		x = x.substr(x.indexOf("$") + 1, x.length);
+      		document.getElementById("file5").innerHTML = x.substr(0, x.indexOf("$"));
+      		x = x.substr(x.indexOf("$") + 1, x.length);
+      		document.getElementById("size5").innerHTML = x.substr(0, x.indexOf("$"));
+    }
+  };
+
+  xhttp.open("GET", "getfinf", true);
+  xhttp.send();
+}
+
+function checkconn() {
+	var xhttp = new XMLHttpRequest();
+	document.getElementById("check").innerHTML = "Getting Connection Status...";
+	xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      		document.getElementById("check").innerHTML = this.responseText;
+    }
+  };
+
+  xhttp.open("GET", "checkconn", true);
+  xhttp.send();
+}
+
+</script>
+
+<style>
+.footer {
+  border-top: 1px;
+  border-top-style: dotted;
+  position: relative;
+  left: -5px;
+  bottom: -30px;
+  width: 100%;
+  height: 4%;
+  color: black;
+  text-align: center;
+  padding: 5px;
+}
+</style>
+
+<h1>ESP ISP Programmer!</h1>
+<nav><b><a href="/">HOME</a> | <a href="/setup">SSID Setup</a> | <a href="/fprog">Fast Prog.</a></b></nav>
+<p>&nbsp;</p>
+<p>Select the file from list and Choose the Hex File to Upload</p>
+<div class = "upload">
+	<form method = "POST" action = "/upload" enctype="multipart/form-data">
+		<input type="file" name="data"/>
+		<input type="submit" name="upload" value="Upload" title = "Upload File">
+	</form>	
+</div>
+<table style="height: 151px; width: 505px; background-color: #FFFFFF; margin-left: auto; margin-right: auto;" border="1">
+<tbody>
+<tr style="height: 21px;">
+<td style="width: 19px; height: 4.5px;">1.</td>
+<td style="width: 25px; height: 4.5px;"><label><input id="location" class="radio" type="radio" name="location" checked onchange=sendloc(1) /></label></td>
+<td style="width: 347px; height: 4.5px;"><a href="/open?index=1" id="file1">file1</a></td>
+<td style="width: 86px; height: 4.5px;" id="size1">size1</td>
+</tr>
+<tr style="height: 21px;">
+<td style="width: 19px; height: 21px;">2.</td>
+<td style="width: 25px; height: 21px;"><label><input id="location" class="radio" type="radio" name="location" onchange=sendloc(2) /></label></td>
+<td style="width: 347px; height: 21px;"><a href="/open?index=2" id="file2">file2</a></td>
+<td style="width: 86px; height: 21px;" id="size2">size2</td>
+</tr>
+<tr style="height: 21px;">
+<td style="width: 19px; height: 21px;">3.</td>
+<td style="width: 25px; height: 21px;"><label><input id="location" class="radio" type="radio" name="location" onchange=sendloc(3) /></label></td>
+<td style="width: 347px; height: 21px;"><a href="/open?index=3" id="file3">file3</a></td>
+<td style="width: 86px; height: 21px;" id="size3">size3</td>
+</tr>
+<tr style="height: 21px;">
+<td style="width: 19px; height: 21px;">4.</td>
+<td style="width: 25px; height: 21px;"><label><input id="location" class="radio" type="radio" name="location" onchange=sendloc(4) /></label></td>
+<td style="width: 347px; height: 21px;"><a href="/open?index=4" id="file4">file4</a></td>
+<td style="width: 86px; height: 21px;" id="size4">size4</td>
+</tr>
+<tr style="height: 21px;">
+<td style="width: 19px; height: 21px;">5.</td>
+<td style="width: 25px; height: 21px;"><label><input id="location" class="radio" type="radio" name="location" onchange=sendloc(5) /></label></td>
+<td style="width: 347px; height: 21px;"><a href="/open?index=5" id="file5">file5</a></td>
+<td style="width: 86px; height: 21px;" id="size5">size5</td>
+</tr>
+</tbody>
+</table>
+<div>&nbsp;</div>
+<div>
+<p>Connect the ISP cable and press <button type="submit" value="ready" onclick=checkconn()>Ready</button></p>
+<p id="check">---- ---- ----</p>
+<br />
+<p>To read the device, set no. of byte(s) to read and Press Read</p>
+<p><input id="mem" name="mem" type="number" max="8192" min="1"> byte(s)&emsp;<button method="GET" type="submit" value="read" onclick=read() >Read</button></p>
+
+<p>To program/verify the device Select the file and Press Program/Verify</p>
+<button method="GET" type="submit" value="program" onclick=program() >Program</button>
+<button method="GET" type="submit" value="verify" onclick=verify() >Verify</button>
+
+<p id="wait" style="color: #FF0000; font-weight: bold; display: none;">Wait!!!</p></div>
+
+<p id="v_success" style="display: none; color: green; font-weight: bold;">Program Verification Successful</p>
+<p id="v_fail" style="display: none; color: red; font-weight: bold;">Program Verification Failed</p>
+
+<div class="footer"><a href="https://github.com/ankitpatle">Ankit Patle</a></div>
+
+</body>
+</html>

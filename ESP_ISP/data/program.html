@@ -1,0 +1,77 @@
+<html>
+<body style="text-align: center;" bgcolor="#b3ffb4" onload=init()>
+<title>Programming</title>
+ 
+<script>
+
+var url = "ws://" + window.location.hostname + ":1337/";
+//var websocket;
+
+// This is called when the page finishes loading
+function init()
+{
+    // Connect to WebSocket server
+    websocket = new WebSocket(url);
+    
+    // Assign callbacks
+    websocket.onopen = function(evt) { onOpen(evt) };
+    websocket.onclose = function(evt) { onClose(evt) };
+    websocket.onmessage = function(evt) { onMessage(evt) };
+}
+ 
+// Called when a WebSocket connection is established with the server
+function onOpen(evt) 
+{
+    document.getElementById('log').value += "Connected to WebSocket!!\n";
+}
+ 
+// Called when the WebSocket connection is closed
+function onClose(evt) 
+{
+    document.getElementById('home').style.display = "block";
+}
+ 
+// Called when a message is received from the server
+function onMessage(evt) 
+{
+    if (evt.data == "success")
+    {
+      document.getElementById('success').style.display = "block";
+    }
+    else if (evt.data == "failed")
+    {
+      document.getElementById('fail').style.display = "block";
+    }
+    else
+      document.getElementById('log').value += evt.data;
+}
+
+</script>
+ 
+<style>
+.footer {
+  border-top: 1px;
+  border-top-style: dotted;
+  position: relative;
+  left: -5px;
+  bottom: -30px;
+  width: 100%;
+  height: 4%;
+  color: black;
+  text-align: center;
+  padding: 5px;
+}
+</style>
+
+<h2>PROGRAMMING <span style="font-size: 50%">Please Wait..</span></h2>
+
+<textarea id="log" style="background-color: #ffffff; width: 60%; height: 75%; border: 1px solid #4d4d4d; overflow: auto; margin: auto;" readonly></textarea>
+
+<p id="success" style="display: none;">Programming <span style="font-weight: bold; color: #03b500">Success</span> click Home to go back to Home Page</p>
+<p id="fail" style="display: none;">Programming <span style="font-weight: bold; color: #ff0000">Failed</span> click Home to go back to Home Page</p>
+<p id="home" style="display: none; text-decoration-line: underline; font-weight: bold;"><a href="/" style="">Home</a></p>
+
+<div class="footer"><a href="https://github.com/ankitpatle">Ankit Patle</a></div>
+
+</body>
+</html>

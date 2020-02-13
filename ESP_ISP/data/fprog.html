@@ -1,0 +1,99 @@
+<html>
+<body style="text-align: center;" bgcolor="#b3ffb4">
+<title>Fast Programmer</title>
+ 
+<script>
+
+var url = "ws://" + window.location.hostname + ":1337/";
+//var websocket;
+
+// This is called when the page finishes loading
+function init()
+{
+    // Connect to WebSocket server
+    websocket = new WebSocket(url);
+    
+    // Assign callbacks
+    websocket.onopen = function(evt) { onOpen(evt) };
+    websocket.onclose = function(evt) { onClose(evt) };
+    websocket.onmessage = function(evt) { onMessage(evt) };
+}
+ 
+// Called when a WebSocket connection is established with the server
+function onOpen(evt) 
+{
+    document.getElementById('log').value += "Connected to WebSocket!!\n";
+}
+ 
+// Called when the WebSocket connection is closed
+function onClose(evt) 
+{
+    document.getElementById('home').style.display = "block";
+}
+ 
+// Called when a message is received from the server
+function onMessage(evt) 
+{
+    if (evt.data == "success")
+    {
+      document.getElementById('success').style.display = "block";
+    }
+    else if (evt.data == "failed")
+    {
+      document.getElementById('fail').style.display = "block";
+    }
+    else
+      document.getElementById('log').value += evt.data;
+}
+
+function upload(input)
+{
+	var xhr = new XMLHttpRequest();
+	xhr.upload.onload = function(e) 
+	{
+		init();
+	}
+
+	xhr.open("POST", "/tempfile", true);
+	xhr.send(new FormData(input.parentElement));
+}
+</script>
+ 
+<style>
+.footer {
+  border-top: 1px;
+  border-top-style: dotted;
+  position: relative;
+  left: -5px;
+  bottom: -30px;
+  width: 100%;
+  height: 4%;
+  color: black;
+  text-align: center;
+  padding: 5px;
+}
+</style>
+
+<h1>Fast Programmer</h1>
+
+<nav><b><a href="/">HOME</a> | <a href="/setup">SSID Setup</a> | <a href="/fprog">Fast Prog.</a></b></nav>
+
+<p>Select the HEX File to burn to microcontroller, and press upload and program.</p>
+
+<div>
+	<form enctype="multipart/form-data" method = "POST">
+		<input type="file" name="data"/>
+		<input type="button" value="Upload & Program" onclick="upload(this)">
+	</form>	
+</div>
+
+<textarea id="log" style="background-color: #ffffff; width: 60%; height: 60%; border: 1px solid #4d4d4d; overflow: auto; margin: auto;" readonly></textarea>
+
+<p id="success" style="display: none;">Programming <span style="font-weight: bold; color: #03b500">Success</span> click Home to go back to Home Page</p>
+<p id="fail" style="display: none;">Programming <span style="font-weight: bold; color: #ff0000">Failed</span> click Home to go back to Home Page</p>
+<p id="home" style="display: none; text-decoration-line: underline; font-weight: bold;"><a href="/" style="">Home</a></p>
+
+<div class="footer"><a href="https://github.com/ankitpatle">Ankit Patle</a></div>
+
+</body>
+</html>

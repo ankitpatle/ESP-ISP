@@ -1,0 +1,49 @@
+<html>
+<body style="text-align: center;" bgcolor="#b3ffb4">
+<title>SSID Setup</title>
+
+<script>
+function sendssid() {
+  var xhttp = new XMLHttpRequest();
+  var x = document.getElementById("ssid").value;
+  var y = document.getElementById("pass").value;
+
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("done").innerHTML = "Done";
+    }
+  };
+  var final = "ssid?ss=" + x + "&pass=" + y;
+  xhttp.open("GET", final, true);
+  xhttp.send();
+}
+</script>
+
+<style>
+.footer {
+  border-top: 1px;
+  border-top-style: dotted;
+  position: relative;
+  left: -5px;
+  bottom: -30px;
+  width: 100%;
+  height: 4%;
+  color: black;
+  text-align: center;
+  padding: 5px;
+}
+</style>
+
+<h1>ESP ISP Programmer!</h1>
+<nav><b><a href="/">HOME</a> | <a href="/setup">SSID Setup</a> | <a href="/fprog">Fast Prog.</a></b></nav><br>
+<p>SSID: <input id="ssid" name="ssid" type="text" placeholder="ssid" /><br />
+ Pass. : <input id="pass" name="pass" type="password" placeholder="********" /><br />
+<button  type="button" onclick=sendssid() >Submit</button>
+</p>
+<p id="done" style="color: #008000; font-weight: bold;"></p>
+<p>After saving configuration connect to the given SSID and<br>open "<a href="http://esp-isp.local">esp-isp.local</a>" (or IP of esp board)</p>
+
+<div class="footer"><a href="https://github.com/ankitpatle">Ankit Patle</a></div>
+
+</body>
+</html>
