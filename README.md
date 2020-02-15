@@ -6,4 +6,6 @@ ESP_ISP Contains Code For ESP32 (Use ESP32 sketch data uploader to upload html f
 
 python_gui Contains python script for Application GUI
 
-TODO: Documentation
+TODO
+-------
+Documentation
