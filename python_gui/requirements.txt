@@ -1,0 +1,7 @@
+# This is a list of python packages needed for ESP-ISP. This file is used with pip.
+# You can use the following command to install (always check path)
+# pip install -r requirements.txt
+wxPython>=4.0.7
+pyserial>=3.4
+websocket-client>=0.57.0
+intelhex>=2.2.1
