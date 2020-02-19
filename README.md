@@ -5,6 +5,7 @@ ESP_ISP Contains Code For ESP32 for Arduino IDE (Use ESP32 sketch data uploader 
 
 
 python_gui Contains python script for Application GUI
+Use requirements.txt for required Python packages
 
 TODO
 -------
